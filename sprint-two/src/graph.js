@@ -28,6 +28,12 @@ Graph.prototype.removeNode = function(node) {
   for (let i = 0; i < this.nodes.length; i += 1) {
     if (this.nodes[i] === node) {
       this.nodes.splice(i, 1);
+      // needs to remove the edges to and from the node as well
+      //console.log(this.nodes)
+      //this.removeEdge()
+      for (let j = 0; j < this.nodes.length; j += 1) {
+        this.removeEdge(node, this.nodes[j]);
+      }
     }
   }
 };
@@ -55,7 +61,7 @@ Graph.prototype.removeEdge = function(fromNode, toNode) {
   let node1 = this.edges[fromNode];
   let node2 = this.edges[toNode];
 
-  if (_.indexOf(node1, toNode) > 0 && _.indexOf(node2, fromNode) > 0) {
+  if (_.indexOf(node1, toNode) >= 0 && _.indexOf(node2, fromNode) >= 0) {
     node1.splice(_.indexOf(node1, toNode), 1);
     node2.splice(_.indexOf(node2, fromNode), 1);
   }
@@ -63,6 +69,9 @@ Graph.prototype.removeEdge = function(fromNode, toNode) {
 
 // Pass in a callback which will be executed on each node of the graph.
 Graph.prototype.forEachNode = function(cb) {
+  for (let i = 0; i < this.nodes.length; i += 1) {
+    cb(this.nodes[i]);
+  }
 };
 
 /*
