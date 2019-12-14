@@ -1,6 +1,7 @@
 describe('hashTable', function() {
   var hashTable;
-  var people = [['Steven', 'Tyler'], ['George', 'Harrison'], ['Mr.', 'Doob'], ['Dr.', 'Sunshine'], ['John', 'Resig'], ['Brendan', 'Eich'], ['Alan', 'Turing']];
+  var people = [['Steven', 'Tyler'], ['George', 'Harrison'], ['Mr.', 'Doob'], ['Dr.', 'Sunshine'],
+    ['John', 'Resig'], ['Brendan', 'Eich'], ['Alan', 'Turing'], ['Kang', 'Tan'], ['Brian', 'Tansy']];
 
 
   beforeEach(function() {
@@ -53,8 +54,48 @@ describe('hashTable', function() {
     expect(hashTable.retrieve('Steven')).to.equal('Tyler');
   });
 
+  it('should count for all the index used in hashtable', function() {
+    hashTable.insert('a', 'Tyler');
+    hashTable.insert('ab', 'Tyler');
+    hashTable.insert('abc', 'Tyler');
+    hashTable.insert('abcd', 'Tyler');
+    hashTable.insert('abcde', 'Tyler');
+    hashTable.insert('abcdef', 'Tyler');
+    hashTable.insert('abcdef', 'leeee');
+
+    expect(hashTable.storageCount).to.equal(5);
+  });
+
+  it('should decrement when index is not used', function() {
+    hashTable.insert('a', 'Tyler');
+    hashTable.insert('ab', 'Tyler');
+    hashTable.insert('abc', 'Tyler');
+    hashTable.insert('abcd', 'Tyler');
+    hashTable.insert('abcde', 'Tyler');
+    hashTable.insert('abcdef', 'Tyler');
+    hashTable.insert('abcdef', 'leeee');
+    hashTable.remove('a');
+
+    expect(hashTable.storageCount).to.equal(4);
+  });
+
+  // it('Limited Array should double in size when 75% has been filled', function() {
+  //   hashTable.insert('a', 'Tyler');
+  //   hashTable.insert('ab', 'Tyler');
+  //   hashTable.insert('abc', 'Tyler');
+  //   hashTable.insert('abcd', 'Tyler');
+  //   hashTable.insert('abcde', 'Tyler');
+  //   hashTable.insert('abcdef', 'Tyler');
+  //   hashTable.insert('abcdefg', 'leeee');
+  //   hashTable.insert('abcdefgh', 'leeee');
+  //   hashTable.insert('abcdefghi', 'leeee');
+  //   hashTable.insert('abcdefghij', 'leeee');
+  //   hashTable.insert('abcdefghijk', 'leeee');
+  //   hashTable.insert('abcdefghijkl', 'leeee');
+  // });
+
   // (Advanced! Remove the extra "x" when you want the following tests to run)
-  xit ('should double in size when needed', function() {
+  it ('should double in size when needed', function() {
     _.each(people, function(person) {
       var firstName = person[0];
       var lastName = person[1];
@@ -64,7 +105,7 @@ describe('hashTable', function() {
     expect(hashTable._limit).to.equal(16);
   });
 
-  xit ('should halve in size when needed', function() {
+  it ('should halve in size when needed', function() {
     _.each(people, function(person) {
       var firstName = person[0];
       var lastName = person[1];

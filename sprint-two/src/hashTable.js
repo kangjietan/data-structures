@@ -1,7 +1,7 @@
 var HashTable = function () {
   this._limit = 8;
   this._storage = LimitedArray(this._limit);
-  // this._storage = [];
+  this.storageCount = 0;
 };
 
 HashTable.prototype.insert = function (k, v) {
@@ -29,11 +29,49 @@ HashTable.prototype.insert = function (k, v) {
           this._storage.get(index)[i][1] = v;
         }
       }
+    } else {
+      this._storage.get(index).push([k, v]);
     }
-    this._storage.get(index).push([k, v]);
   } else {
     this._storage.set(index, [[k, v]]);
+    this.storageCount++;
     // this._storage.get(index).push([k, v]);
+  }
+
+  if (this.storageCount >= (this._limit * 0.75)) {
+    // var newHashTable = new HashTable;
+    // newHashTable._limit = this._limit * 2;
+    // console.log("NEW TREE===================", newHashTable);
+    // this._storage.each(function (arr) {
+    //   if (Array.isArray(arr)) {
+    //     for (let i = 0; i < arr.length; i += 1) {
+    //       console.log(arr[i][0], arr[i][1])
+    //       newHashTable.insert(arr[i][0], arr[i][1]);
+    //     }
+    //   }
+    // });
+
+    // newTable(this);
+    // console.log(this._storage);
+
+    var currentHashTable = [];
+    this._storage.each(function (arr) {
+      if (Array.isArray(arr)) {
+        for (let i = 0; i < arr.length; i += 1) {
+          currentHashTable.push(arr[i]);
+        }
+      }
+    });
+
+    this._limit += this._limit;
+    this._storage = LimitedArray(this._limit);
+    this.storageCount = 0;
+
+    console.log(this._limit);
+
+    for (let i = 0; i < currentHashTable.length; i += 1) {
+      this.insert(currentHashTable[i][0], currentHashTable[i][1]);
+    }
   }
 
   // if (this._storage.get(index)) {
@@ -63,9 +101,11 @@ HashTable.prototype.retrieve = function (k) {
 
   // Using given array access methods ============================================
   var hashTableArr = this._storage.get(index);
-  for (let i = 0; i < hashTableArr.length; i += 1) {
-    if (hashTableArr[i][0] === k) {
-      return hashTableArr[i][1];
+  if (hashTableArr) {
+    for (let i = 0; i < hashTableArr.length; i += 1) {
+      if (hashTableArr[i][0] === k) {
+        return hashTableArr[i][1];
+      }
     }
   }
 };
@@ -82,7 +122,29 @@ HashTable.prototype.remove = function (k) {
   var hashTableArr = this._storage.get(index);
   for (let i = 0; i < hashTableArr.length; i += 1) {
     if (hashTableArr[i][0] === k) {
-      return hashTableArr.splice(i, 1);
+      hashTableArr.splice(i, 1);
+      if (hashTableArr.length === 0) {
+        this.storageCount--;
+      }
+    }
+  }
+
+  if (this.storageCount <= (this._limit * 0.25)) {
+    var currentHashTable = [];
+    this._storage.each(function (arr) {
+      if (Array.isArray(arr)) {
+        for (let i = 0; i < arr.length; i += 1) {
+          currentHashTable.push(arr[i]);
+        }
+      }
+    });
+
+    this._limit = this._limit / 2;
+    this._storage = LimitedArray(this._limit);
+    this.storageCount = 0;
+
+    for (let i = 0; i < currentHashTable.length; i += 1) {
+      this.insert(currentHashTable[i][0], currentHashTable[i][1]);
     }
   }
 };
