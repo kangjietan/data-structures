@@ -32,9 +32,25 @@ HashTable.prototype.insert = function (k, v) {
     }
     this._storage.get(index).push([k, v]);
   } else {
-    this._storage.set(index, []);
-    this._storage.get(index).push([k, v]);
+    this._storage.set(index, [[k, v]]);
+    // this._storage.get(index).push([k, v]);
   }
+
+  // if (this._storage.get(index)) {
+  //   if (this.retrieve(k)) {
+  //     this._storage.each(function (array) {
+  //       for (let i = 0; i < array.length; i += 1) {
+  //         if (array[0] === k) {
+  //           array[1] = v;
+  //         }
+  //       }
+  //     });
+  //   }
+  //   this._storage.get(index).push([k, v]);
+  // } else {
+  //   this._storage.set(index, []);
+  //   this._storage.get(index).push([k, v]);
+  // }
 };
 
 HashTable.prototype.retrieve = function (k) {
@@ -75,6 +91,9 @@ HashTable.prototype.remove = function (k) {
 
 /*
  * Complexity: What is the time complexity of the above functions?
+  insert(): Logarithmic.
+  retrieve(): Constant.
+  remove(): Constant.
  */
 
 

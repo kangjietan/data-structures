@@ -1,5 +1,3 @@
-
-
 // Instantiate a new graph
 var Graph = function() {
   this.nodes = [];
@@ -76,4 +74,11 @@ Graph.prototype.forEachNode = function(cb) {
 
 /*
  * Complexity: What is the time complexity of the above functions?
+  addNode(): Constant.
+  contains(): Linear.
+  removeNode(): Linear.
+  hasEdge(): Linear.
+  addEgde(): Constant.
+  removeEdge(): Linear.
+  forEachNode(): Linear.
  */
