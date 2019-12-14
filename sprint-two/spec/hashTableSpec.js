@@ -47,6 +47,12 @@ describe('hashTable', function() {
     window.getIndexBelowMaxForKey = oldHashFunction;
   });
 
+  // Our test
+  it('retrieve should return the value when the value is present for given key', function() {
+    hashTable.insert('Steven', 'Tyler');
+    expect(hashTable.retrieve('Steven')).to.equal('Tyler');
+  });
+
   // (Advanced! Remove the extra "x" when you want the following tests to run)
   xit ('should double in size when needed', function() {
     _.each(people, function(person) {

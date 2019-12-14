@@ -41,4 +41,9 @@ describe('tree', function() {
     expect(tree.contains(8)).to.equal(true);
   });
 
+  // Our test
+  it('children should be an array', function() {
+    expect(Array.isArray(tree.children)).to.equal(true);
+  });
+
 });

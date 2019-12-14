@@ -52,4 +52,9 @@ describe('linkedList', function() {
   });
 
   // add more tests here to test the functionality of linkedList
+  it('should be able to add a function', function() {
+    var test = function() {};
+    linkedList.addToTail(test);
+    expect(linkedList.contains(test)).to.equal(true);
+  });
 });

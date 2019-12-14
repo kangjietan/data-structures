@@ -24,4 +24,10 @@ describe('set', function() {
     expect(set.contains('Mel Gibson')).to.equal(false);
   });
 
+  // Our test
+  it('should not add input that is not a string', function() {
+    set.add(false);
+    expect(set.contains(false)).to.equal(false);
+  });
+
 });

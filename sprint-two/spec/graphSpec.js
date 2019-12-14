@@ -68,4 +68,22 @@ describe('graph', function() {
     expect(graph.hasEdge(3, 5)).to.equal(true);
     expect(graph.hasEdge(5, 5)).to.equal(true);
   });
+
+  // Our test
+  it('should return false for non-existing values', function() {
+    graph.addNode(5);
+    graph.addNode(2);
+    graph.addNode(1);
+    graph.addNode(3);
+    expect(graph.hasEdge(true, null)).to.equal(false);
+  });
+
+  it('should return true for existing values for edges', function() {
+    graph.addNode(5);
+    graph.addNode(2);
+    graph.addNode(1);
+    graph.addNode(3);
+    graph.addEdge(5, 2);
+    expect(graph.hasEdge(5, 2)).to.equal(true);
+  });
 });

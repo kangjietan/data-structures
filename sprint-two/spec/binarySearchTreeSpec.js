@@ -37,4 +37,30 @@ describe('binarySearchTree', function() {
     binarySearchTree.depthFirstLog(func);
     expect(array).to.eql([5, 2, 3, 7]);
   });
+
+  // Our test
+  it('the value at the BST should be greater than the .left property', function() {
+    binarySearchTree.insert(2);
+    binarySearchTree.insert(3);
+    binarySearchTree.insert(7);
+    binarySearchTree.insert(6);
+
+    var leftCheck = function() {
+      var result = false;
+
+      var recursion = function(x) {
+        if (x.left !== null) {
+          if (x.value > x.left.value) {
+            result = true;
+          }
+          recursion(x.left);
+        }
+      };
+
+      recursion(binarySearchTree);
+      return result;
+    };
+
+    expect(leftCheck()).to.equal(true);
+  });
 });
